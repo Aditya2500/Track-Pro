@@ -31,7 +31,7 @@ class _ListDevicesState extends State<ListDevices> {
      setState(() {
         print('list ');
        print(value);
-       
+       devices = value;
      });        
    });
      });        
