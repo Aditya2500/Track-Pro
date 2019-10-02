@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "610274961744",
+    "firebase_url": "https://tk007-7beef.firebaseio.com",
+    "project_id": "tk007-7beef",
+    "storage_bucket": "tk007-7beef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610274961744:android:a3001a8e530fa41b972455",
+        "android_client_info": {
+          "package_name": "gps.tracking.tk007"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610274961744-pcoht9mv3jm1l3atq2is2ernc7qjpv4i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "gps.tracking.tk007",
+            "certificate_hash": "563d6437de62f6a12a2c2b566bcf19b5e516d654"
+          }
+        },
+        {
+          "client_id": "610274961744-9rg2n77vj854a16lnll0pm3r2dupct3l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg_mIsMqhJEHGFcjkL4XyCieh9biF4Tlw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "610274961744-9rg2n77vj854a16lnll0pm3r2dupct3l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
