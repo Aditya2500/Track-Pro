@@ -60,7 +60,7 @@ static void goToProfile(BuildContext context) {
   }
   static void goToHome(BuildContext context) {
     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-    ListDevices()), (Route<dynamic> route) => false);
+    AddTabs()), (Route<dynamic> route) => false);
     // Navigator.push(
     //   context,
     //  // PageTransition(widget: HomeScreen()),

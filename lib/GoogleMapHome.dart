@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-
+import 'package:tracking06/services/http_request.dart';
+import 'package:tracking06/utils/sharedUtils.dart';
 
 class GoogleMapHome extends StatefulWidget {
   @override
@@ -29,12 +29,12 @@ class _GoogleMapHomeState extends State<GoogleMapHome> {
   MapType _currentMapType = MapType.normal;
 
   void _onMapTypeButtonPressed() {
-  setState(() {
-    _currentMapType = _currentMapType == MapType.normal
-        ? MapType.satellite
-        : MapType.normal;
-  });
-}
+    setState(() {
+      _currentMapType = _currentMapType == MapType.normal
+          ? MapType.satellite
+          : MapType.normal;
+    });
+  }
 
   void _onAddMarkerButtonPressed(LatLng _position) {
     setState(() {
@@ -43,8 +43,8 @@ class _GoogleMapHomeState extends State<GoogleMapHome> {
         markerId: MarkerId(_lastMapPosition.toString()),
         position: _position,
         infoWindow: InfoWindow(
-          title: 'Really cool place',
-          snippet: '5 Star Rating',
+          title: _position.toString(),
+          snippet: 'near',
         ),
         icon: BitmapDescriptor.defaultMarker,
       ));
@@ -71,6 +71,11 @@ class _GoogleMapHomeState extends State<GoogleMapHome> {
     });
   }
 
+  String email = '';
+  String deviceId = '';
+  String firebaseId = '';
+  var items ;
+
   @override
   void initState() {
     super.initState();
@@ -82,32 +87,53 @@ class _GoogleMapHomeState extends State<GoogleMapHome> {
         //latlng is List<LatLng>
         points: latlng,
         color: Colors.red[800]));
-    // Timer.periodic(new Duration(seconds: 3), (timer) {
-    //   double lats = 22.758278 + (count*0.01);
-    //   print(lats);
-    //    count++;
-    //   _new = LatLng(lats, 88.337194);
-    //   latlng.add(_new);
-    //   _onAddMarkerButtonPressed(LatLng(lats, 88.337194));
-    //   _gotoLocation(lats,88.337194);
+    Timer.periodic(new Duration(seconds: 10), (timer) {
 
-    //   // _polyline.add(Polyline(
-    //   //           polylineId: PolylineId(_lastMapPosition.toString()),
-    //   //           visible: true,
-    //   //           //latlng is List<LatLng>
-    //   //           points: latlng,
-    //   //           color: Colors.red[800]
-    //   //       ));
-    // });
+
+      SessionStorage.getCurrentUser('user_email').then((value) {
+        setState(() {
+          this.email = value;
+        });
+      });
+      SessionStorage.getCurrentUser('uid').then((value) {
+        setState(() {
+          this.firebaseId = value;
+          TrackerApiService.listDevices(this.firebaseId, this.email)
+              .then((value) {
+            setState(() {                          
+              items = value["items"][0]["lastLog"]["gpsData"];             
+              _onAddMarkerButtonPressed(LatLng(items["lat"],items["lon"]));
+              _gotoLocation(items["lat"],items["lon"]);
+            });
+          });
+        });
+      });
+
+      
+
+      // double lats = 22.758278 + (count * 0.01);
+      // //print(lats);
+      // count++;
+      // _new = LatLng(lats, 88.337194);
+      // latlng.add(_new);
+      //_onAddMarkerButtonPressed(LatLng(lats, 88.337194));
+      // _gotoLocation(lats,88.337194);
+
+      // _polyline.add(Polyline(
+      //           polylineId: PolylineId(_lastMapPosition.toString()),
+      //           visible: true,
+      //           //latlng is List<LatLng>
+      //           points: latlng,
+      //           color: Colors.red[800]
+      //       ));
+    });
   }
 
   double zoomVal = 5.0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(    
-     
-
+    return Scaffold(
       body: Stack(
         children: <Widget>[
           _buildGoogleMap(context),
@@ -115,31 +141,27 @@ class _GoogleMapHomeState extends State<GoogleMapHome> {
           //_zoomplusfunction(),
 
           Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Column(
-                  children: <Widget> [
-                    FloatingActionButton(
-                      onPressed: _onMapTypeButtonPressed,
-                      materialTapTargetSize: MaterialTapTargetSize.padded,
-                      backgroundColor: Colors.green,
-                      child: const Icon(Icons.map, size: 36.0),
-                    ),
-                  
-                  ],
-                ),
+            padding: const EdgeInsets.all(16.0),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Column(
+                children: <Widget>[
+                  FloatingActionButton(
+                    onPressed: _onMapTypeButtonPressed,
+                    materialTapTargetSize: MaterialTapTargetSize.padded,
+                    backgroundColor: Colors.green,
+                    child: const Icon(Icons.map, size: 36.0),
+                  ),
+                ],
               ),
             ),
-
+          ),
         ],
       ),
 
       //-----END of the BODY PART of the APP ----
     );
   }
-
-  
 
   Widget _zoomminusfunction() {
     return Align(
@@ -365,7 +387,6 @@ class _GoogleMapHomeState extends State<GoogleMapHome> {
         markers: _markers,
         //polylines: _polyline,
         //onCameraMove: _updateCameraPosition,
-
       ),
     );
   }
@@ -388,7 +409,7 @@ class _GoogleMapHomeState extends State<GoogleMapHome> {
     */
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(lat, long),
-      zoom: 15,
+      zoom: 16,
       tilt: 50.0,
       bearing: 45.0,
     )));

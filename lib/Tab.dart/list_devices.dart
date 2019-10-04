@@ -18,28 +18,6 @@ class _ListDevicesState extends State<ListDevices> {
   List<Map> devices = [];
   @override
   void initState() {
-   SessionStorage.getCurrentUser('user_email').then((value){
-     setState(() {
-       this.email = value;
-      
-     });         
-   });
-   SessionStorage.getCurrentUser('uid').then((value){
-     setState(() {
-        this.firebaseId = value;
-        TrackerApiService.listDevices(this.firebaseId, this.email).then((value){
-     setState(() {
-        print('list ');
-       print(value);
-       devices = value;
-     });        
-   });
-     });        
-   });
-   
-   
-    
-    
     super.initState();
   }
 
@@ -55,16 +33,7 @@ class _ListDevicesState extends State<ListDevices> {
   //   super.initState();
   // }
 
-  Future<void> getDevices() async {
-    try {
-      dynamic deviceListing =
-          await TrackerApiService.listDevices(this.firebaseId, this.email);
-         setState(() {
-        devices = deviceListing.items;
-      
-      });
-    } catch (error) {}
-  }
+ 
 
   @override
   Widget build(BuildContext context) {

@@ -44,96 +44,11 @@ class _AddDeviceState extends State<AddDevice> {
 
   @override
   Widget build(BuildContext context) {
-    if (email == '') {
-      return Text("loading...");
-    }
-    double defaultScreenWidth = 400.0;
-    double defaultScreenHeight = 810.0;
-    ScreenUtil.instance = ScreenUtil(
-      width: defaultScreenWidth,
-      height: defaultScreenHeight,
-      allowFontScaling: true,
-    )..init(context);
+   
     return new Scaffold(
-       appBar: AppBar(
-            automaticallyImplyLeading: true,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () => Navigator.pop(context, false),
-            )),
+       
         body: new Container(
-            child: new Form(
-                autovalidate: true,
-                child: new ListView(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: ScreenUtil.instance.setHeight(50.0)),
-                      child: new Center(
-                        child: new Text('Track-Pro',
-                            style: TextStyle(fontSize: 30)),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: ScreenUtil.instance.setHeight(10.0)),
-                      child: new Center(
-                        child: new Text('Safety on fingertips',
-                            style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                                fontFamily: "Open Sans",
-                                fontSize: 15)),
-                      ),
-                    ),
-                    new Padding(
-                      padding: EdgeInsets.only(
-                          left: ScreenUtil.instance.setHeight(8.0),
-                          right: ScreenUtil.instance.setHeight(8.0),
-                          top: ScreenUtil.instance.setHeight(120.0)),
-                      child: new Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          new Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: new ListTile(
-                                  leading: const Icon(
-                                    Icons.email,
-                                  ),
-                                  title: new TextFormField(
-                                    keyboardType: TextInputType.emailAddress,
-                                    onSaved: (val) => deviceId = val,
-                                    decoration: new InputDecoration(
-                                      hintText: "Device Id",
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          new Padding(
-                            padding: EdgeInsets.all(
-                                ScreenUtil.instance.setHeight(15.0)),
-                            child: new Container(
-                              width: 30.0,
-                              height: 50.0,
-                              child: new RaisedButton(
-                                onPressed: addDevice,
-                                child: new Text("Add Device",
-                                    style: new TextStyle(
-                                        color: Colors.white, fontSize: 15.0)),
-                                color: Colors.green[600],
-                                shape: new RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(30.0)),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ))));
+          child:Center(child: Text('Under Development')),
+    ));
   }
 }
