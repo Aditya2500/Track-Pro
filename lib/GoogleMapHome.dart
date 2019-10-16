@@ -87,7 +87,7 @@ class _GoogleMapHomeState extends State<GoogleMapHome> {
         //latlng is List<LatLng>
         points: latlng,
         color: Colors.red[800]));
-    Timer.periodic(new Duration(seconds: 10), (timer) {
+    Timer.periodic(new Duration(seconds: 1), (timer) {
 
 
       SessionStorage.getCurrentUser('user_email').then((value) {
